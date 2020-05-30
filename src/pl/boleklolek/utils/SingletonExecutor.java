@@ -9,6 +9,11 @@ import java.util.concurrent.ScheduledExecutorService;
 public class SingletonExecutor
 {
     /**
+     * Stała liczba wątków używana do stworzenia puli wątków w serwisie.
+     */
+    private static final int cores = 8;
+
+    /**
      * Konstruktor prywatny.
      */
     private SingletonExecutor()
@@ -31,8 +36,8 @@ public class SingletonExecutor
     private static class Holder
     {
         /**
-         * Stała instancja serwisu z przydzielonymi 8 wątkami.
+         * Stała instancja serwisu z przydzielonymi wątkami.
          */
-        private static final ScheduledExecutorService INSTANCE = Executors.newScheduledThreadPool(8);
+        private static final ScheduledExecutorService INSTANCE = Executors.newScheduledThreadPool(cores);
     }
 }
