@@ -1,3 +1,3 @@
 # car_dashboard
-Car Dashboard Simulator <br>
-Created for component-based programming at Politechnika Lodzka 2020.
+Symulacja deski rozdzielczej samochodu <br>
+Aplikacja stworzona w ramach przedmiotu Programowanie Komponentowe na kierunku Informatyka Politechniki Łódzkiej 2020.
