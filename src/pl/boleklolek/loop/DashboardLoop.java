@@ -10,13 +10,13 @@ import java.util.concurrent.TimeUnit;
 public class DashboardLoop
 {
     /**
-     * Stałe pole TICK = 10 ms - okres jednego kroku w pętli aplikacji.
+     * Stałe pole TICK - okres jednego kroku w pętli aplikacji (mikrosekundy).
      */
-    private static final long TICK = 10000;
+    private static final long TICK = 10_000L;
     /**
      * Stałe pole DELTA TIME - czas pomiędzy kolejnymi aktualizacjami w mikrosekundach.
      */
-    public static final long DELTA_TIME = 1000000 / TICK;
+    public static final long DELTA_TIME = 1_000_000L / TICK;
     /**
      * Pole informujące, czy pętla jest uruchomiona.
      */

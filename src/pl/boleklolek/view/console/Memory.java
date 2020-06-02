@@ -5,6 +5,8 @@ import io.bretty.console.view.MenuView;
 import io.bretty.console.view.ViewConfig;
 import pl.boleklolek.dao.DAO;
 
+import java.util.Optional;
+
 /**
  * Ta klasa zapewnia zarządzanie pamięcią komputera pokładowego.
  */
@@ -178,21 +180,24 @@ class Memory extends MenuView
             @Override
             public void executeCustomAction()
             {
-                String filepath = this.prompt("Wprowadź ścieżkę do pliku XML: ", String.class);
-                String prevSaveFile = menu.dashboard.getMemoryFile();
-                try
+                Optional<String> prevSaveFile = menu.dashboard.getMemoryFile();
+                if (prevSaveFile.isPresent())
                 {
-                    menu.dashboard.setMemoryFile(filepath);
-                    menu.dashboard.loadMemory();
-                    this.actionSuccessful();
-                }
-                catch (Exception exception)
-                {
-                    this.actionFailed();
-                }
-                finally
-                {
-                    menu.dashboard.setMemoryFile(prevSaveFile);
+                    String filepath = this.prompt("Wprowadź ścieżkę do pliku XML: ", String.class);
+                    try
+                    {
+                        menu.dashboard.setMemoryFile(filepath);
+                        menu.dashboard.loadMemory();
+                        this.actionSuccessful();
+                    }
+                    catch (Exception exception)
+                    {
+                        this.actionFailed();
+                    }
+                    finally
+                    {
+                        menu.dashboard.setMemoryFile(prevSaveFile.get());
+                    }
                 }
             }
         }
@@ -281,22 +286,31 @@ class Memory extends MenuView
             @Override
             public void executeCustomAction()
             {
-                String filepath = this.prompt("Wprowadź nazwę pliku XML (bez rozszerzenia): ", String.class);
-                String prevSaveFile = menu.dashboard.getMemoryFile();
-                try
+                Optional<String> prevSaveFile = menu.dashboard.getMemoryFile();
+                if (prevSaveFile.isPresent())
                 {
-                    menu.dashboard.setMemoryFile(filepath + ".xml");
-                    menu.dashboard.saveMemory();
-                    this.actionSuccessful();
+                    String filepath = this.prompt("Wprowadź nazwę pliku XML (bez rozszerzenia): ", String.class);
+                    try
+                    {
+                        menu.dashboard.setMemoryFile(filepath + ".xml");
+                        menu.dashboard.saveMemory();
+                        this.actionSuccessful();
+                    }
+                    catch (Exception exception)
+                    {
+                        this.actionFailed();
+                    }
+                    finally
+                    {
+                        menu.dashboard.setMemoryFile(prevSaveFile.get());
+                    }
                 }
-                catch (Exception exception)
+                else
                 {
+                    System.err.println("DAO nie jest ustawione na plik XML!");
                     this.actionFailed();
                 }
-                finally
-                {
-                    menu.dashboard.setMemoryFile(prevSaveFile);
-                }
+
             }
         }
 

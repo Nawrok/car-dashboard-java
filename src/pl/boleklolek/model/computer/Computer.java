@@ -251,7 +251,10 @@ public class Computer
     {
         for (Trip trip : trips)
         {
-            trip.setMaxSpeed(Math.max(trip.getMaxSpeed(), speed));
+            if (speed > trip.getMaxSpeed())
+            {
+                trip.setMaxSpeed(speed);
+            }
         }
     }
 

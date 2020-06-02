@@ -1,6 +1,7 @@
 package pl.boleklolek.dao.xml;
 
 import pl.boleklolek.dao.MemoryDAO;
+import pl.boleklolek.dao.serializers.Serializer;
 import pl.boleklolek.dao.serializers.XMLSerializer;
 import pl.boleklolek.model.computer.Memory;
 import pl.boleklolek.model.computer.trip.Trip;
@@ -13,9 +14,9 @@ import java.io.IOException;
 public class MemoryXML implements MemoryDAO
 {
     /**
-     * Serializer XML.
+     * Serializer.
      */
-    private final XMLSerializer serializer;
+    private final Serializer serializer;
     /**
      * Plik XML pamięci komputera pokładowego.
      */
@@ -30,8 +31,8 @@ public class MemoryXML implements MemoryDAO
     {
         this.serializer = new XMLSerializer();
         this.memoryFile = "dashboard_memory.xml";
-        this.serializer.alias("memory", Memory.class);
-        this.serializer.alias("trip", Trip.class);
+        ((XMLSerializer) this.serializer).alias("memory", Memory.class);
+        ((XMLSerializer) this.serializer).alias("trip", Trip.class);
     }
 
     /**
@@ -79,7 +80,7 @@ public class MemoryXML implements MemoryDAO
      * @throws IOException wyjątek wejścia/wyjścia
      */
     @Override
-    public Memory loadMemory() throws IOException
+    public Memory loadMemory() throws IOException, ClassNotFoundException
     {
         return serializer.deserialize(Memory.class, memoryFile);
     }

@@ -28,7 +28,7 @@ public class Main
      */
     public static void main(String[] args)
     {
-        Map<DAO, MemoryDAO> memoryDAOs = new HashMap<>();
+        Map<DAO, MemoryDAO> memoryDAOs = new HashMap<>(2);
         memoryDAOs.put(DAO.XML, new MemoryXML());
         memoryDAOs.put(DAO.DATABASE, new MemoryDB());
 

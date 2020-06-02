@@ -34,9 +34,9 @@ public class DashboardState implements DashboardDAO
      */
     public DashboardState()
     {
+        this.serializer = new ObjectSerializer();
         this.odometerSaveFile = "dashboard_odometer.sav";
         this.lightsSaveFile = "dashboard_lights.sav";
-        this.serializer = new ObjectSerializer();
     }
 
     /**

@@ -1,5 +1,6 @@
 package pl.boleklolek.dao.xml;
 
+import pl.boleklolek.dao.serializers.Serializer;
 import pl.boleklolek.dao.serializers.XMLSerializer;
 
 import java.io.IOException;
@@ -16,6 +17,11 @@ public class Settings implements Serializable
     private static final long serialVersionUID = 1L;
 
     /**
+     * Serializer.
+     */
+    private final transient Serializer serializer;
+
+    /**
      * Szybkość aktualizacji średniej prędkości w sekundach.
      */
     private int frequencyOfAvgSpeed;
@@ -30,6 +36,8 @@ public class Settings implements Serializable
      */
     public Settings()
     {
+        this.serializer = new XMLSerializer();
+        ((XMLSerializer) this.serializer).alias("settings", Settings.class);
         initDefault();
     }
 
@@ -79,12 +87,10 @@ public class Settings implements Serializable
      */
     public void save()
     {
-        XMLSerializer xmlSerializer = new XMLSerializer();
-        xmlSerializer.alias("settings", Settings.class);
         try
         {
-            xmlSerializer.serialize(this, "settings.xml");
-            xmlSerializer.serialize(this, "settings_backup.xml");
+            serializer.serialize(this, "settings.xml");
+            serializer.serialize(this, "settings_backup.xml");
         }
         catch (IOException e)
         {
@@ -97,11 +103,9 @@ public class Settings implements Serializable
      *
      * @throws IOException wyjątek wejścia/wyjścia
      */
-    public void load() throws IOException
+    public void load() throws IOException, ClassNotFoundException
     {
-        XMLSerializer xmlSerializer = new XMLSerializer();
-        xmlSerializer.alias("settings", Settings.class);
-        Settings settings = xmlSerializer.deserialize(Settings.class, "settings.xml");
+        Settings settings = serializer.deserialize(Settings.class, "settings.xml");
         if (settings.getFrequencyOfAvgSpeed() <= 0 || settings.getActualTripIndex() < 0 || settings.getActualTripIndex() > 1)
         {
             initDefault();

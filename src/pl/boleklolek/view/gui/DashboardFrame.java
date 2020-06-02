@@ -21,6 +21,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.Enumeration;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -295,20 +296,27 @@ public class DashboardFrame
                 {
                     SingletonExecutor.getInstance().submit(() ->
                     {
-                        String prevSaveFile = dashboard.getMemoryFile();
-                        try
+                        Optional<String> prevSaveFile = dashboard.getMemoryFile();
+                        if (prevSaveFile.isPresent())
                         {
-                            dashboard.setMemoryFile(jfc.getSelectedFile().getCanonicalPath());
-                            dashboard.loadMemory();
-                            JOptionPane.showMessageDialog(frame, "Pomyślnie wczytano pamięć z pliku XML!", "SUKCES", JOptionPane.INFORMATION_MESSAGE);
+                            try
+                            {
+                                dashboard.setMemoryFile(jfc.getSelectedFile().getCanonicalPath());
+                                dashboard.loadMemory();
+                                JOptionPane.showMessageDialog(frame, "Pomyślnie wczytano pamięć z pliku XML!", "SUKCES", JOptionPane.INFORMATION_MESSAGE);
+                            }
+                            catch (Exception exception)
+                            {
+                                new ErrorFrame(frame, "Błąd pliku XML!");
+                            }
+                            finally
+                            {
+                                dashboard.setMemoryFile(prevSaveFile.get());
+                            }
                         }
-                        catch (Exception exception)
+                        else
                         {
-                            new ErrorFrame(frame, "Błąd pliku XML!");
-                        }
-                        finally
-                        {
-                            dashboard.setMemoryFile(prevSaveFile);
+                            new ErrorFrame(frame, "DAO nie jest ustawione na plik XML!");
                         }
                     });
                 }
@@ -359,20 +367,27 @@ public class DashboardFrame
             {
                 SingletonExecutor.getInstance().submit(() ->
                 {
-                    String prevSaveFile = dashboard.getMemoryFile();
-                    try
+                    Optional<String> prevSaveFile = dashboard.getMemoryFile();
+                    if (prevSaveFile.isPresent())
                     {
-                        dashboard.setMemoryFile(jfc.getSelectedFile().getCanonicalPath() + "." + ((FileNameExtensionFilter) jfc.getFileFilter()).getExtensions()[0]);
-                        dashboard.saveMemory();
-                        JOptionPane.showMessageDialog(frame, "Pomyślnie zapisano pamięć do pliku XML!", "SUKCES", JOptionPane.INFORMATION_MESSAGE);
+                        try
+                        {
+                            dashboard.setMemoryFile(jfc.getSelectedFile().getCanonicalPath() + "." + ((FileNameExtensionFilter) jfc.getFileFilter()).getExtensions()[0]);
+                            dashboard.saveMemory();
+                            JOptionPane.showMessageDialog(frame, "Pomyślnie zapisano pamięć do pliku XML!", "SUKCES", JOptionPane.INFORMATION_MESSAGE);
+                        }
+                        catch (Exception exception)
+                        {
+                            new ErrorFrame(frame, "Błąd pliku XML!");
+                        }
+                        finally
+                        {
+                            dashboard.setMemoryFile(prevSaveFile.get());
+                        }
                     }
-                    catch (Exception exception)
+                    else
                     {
-                        new ErrorFrame(frame, "Błąd pliku XML!");
-                    }
-                    finally
-                    {
-                        dashboard.setMemoryFile(prevSaveFile);
+                        new ErrorFrame(frame, "DAO nie jest ustawione na plik XML!");
                     }
                 });
             }

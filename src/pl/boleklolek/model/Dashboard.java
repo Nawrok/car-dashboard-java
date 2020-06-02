@@ -20,6 +20,7 @@ import pl.boleklolek.model.speedometer.Speedometer;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
 
 /**
  * Ta klasa opisuje deskę rozdzielczą. Nadzoruje ona swoje elementy składowe.
@@ -73,7 +74,7 @@ public class Dashboard implements Updateable
         {
             this.settings.load();
         }
-        catch (IOException e)
+        catch (IOException | ClassNotFoundException e)
         {
             this.settings.save();
         }
@@ -171,7 +172,8 @@ public class Dashboard implements Updateable
      */
     public void accelerateCar()
     {
-        speedometer.setAcceleration(speedometer.getDefaultAcceleration() + 25.0);
+        double acceleration = speedometer.getDefaultAcceleration() + 25.0;
+        speedometer.setAcceleration(acceleration);
     }
 
     /**
@@ -188,7 +190,8 @@ public class Dashboard implements Updateable
      */
     public void brakeCar()
     {
-        speedometer.setAcceleration(speedometer.getDefaultAcceleration() - 35.0);
+        double acceleration = speedometer.getDefaultAcceleration() - 35.0;
+        speedometer.setAcceleration(acceleration);
         if (speedometer.isLimiter())
         {
             speedometer.setLimiter(false);
@@ -409,14 +412,14 @@ public class Dashboard implements Updateable
      *
      * @return string z nazwą i rozszerzeniem pliku pamięci
      */
-    public String getMemoryFile()
+    public Optional<String> getMemoryFile()
     {
-        String file = "";
+        String file = null;
         if (memoryDAO instanceof MemoryXML)
         {
             file = ((MemoryXML) memoryDAO).getMemoryFile();
         }
-        return file;
+        return Optional.ofNullable(file);
     }
 
     /**
