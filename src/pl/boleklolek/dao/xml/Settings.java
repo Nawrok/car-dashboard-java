@@ -101,7 +101,7 @@ public class Settings implements Serializable
     /**
      * Wczytuje ustawienia aplikacji z pliku XML (settings.xml).
      *
-     * @throws IOException wyjątek wejścia/wyjścia
+     * @throws IOException            wyjątek wejścia/wyjścia
      * @throws ClassNotFoundException wyjątek klasa nie znaleziona
      */
     public void load() throws IOException, ClassNotFoundException

@@ -56,9 +56,9 @@ public interface Repository<T extends Serializable>
     void sort(Comparator<T> comp);
 
     /**
-     * Pobiera wielkość kolekcji.
+     * Zwraca pojemność kolekcji.
      *
-     * @return wielkość
+     * @return pojemność kolekcji
      */
     int size();
 

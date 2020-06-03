@@ -145,8 +145,8 @@ public class DashboardFrame
         this.frame.setFocusable(true);
         this.frame.addKeyListener(new DashboardKeyListener(this.dashboard, this));
 
-        SingletonExecutor.getInstance().scheduleAtFixedRate(this::update, 0, 1000000 / 60, TimeUnit.MICROSECONDS);
-        SingletonExecutor.getInstance().scheduleAtFixedRate(this::updateLcd, 0, 1000000 / 5, TimeUnit.MICROSECONDS);
+        SingletonExecutor.getInstance().scheduleAtFixedRate(this::update, 0, 1_000_000 / 60, TimeUnit.MICROSECONDS);
+        SingletonExecutor.getInstance().scheduleAtFixedRate(this::updateLcd, 0, 1_000_000 / 5, TimeUnit.MICROSECONDS);
     }
 
     /**

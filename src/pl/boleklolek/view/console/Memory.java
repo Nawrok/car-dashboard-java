@@ -199,6 +199,11 @@ class Memory extends MenuView
                         menu.dashboard.setMemoryFile(prevSaveFile.get());
                     }
                 }
+                else
+                {
+                    System.err.println("DAO nie jest ustawione na plik XML!");
+                    this.actionFailed();
+                }
             }
         }
 
@@ -310,7 +315,6 @@ class Memory extends MenuView
                     System.err.println("DAO nie jest ustawione na plik XML!");
                     this.actionFailed();
                 }
-
             }
         }
 

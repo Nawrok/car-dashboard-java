@@ -1,6 +1,6 @@
 package pl.boleklolek.model.computer;
 
-import pl.boleklolek.loop.DashboardLoop;
+import pl.boleklolek.loop.Updateable;
 import pl.boleklolek.model.computer.trip.Trip;
 import pl.boleklolek.model.odometer.MileageException;
 import pl.boleklolek.model.odometer.Odometer;
@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Ta klasa opisuje komputer pokładowy.
  */
-public class Computer
+public class Computer implements Updateable
 {
     /**
      * Prędkościomierz.
@@ -275,10 +275,11 @@ public class Computer
     /**
      * Aktualizuje licznik przebiegu oraz prędkość maksymalną.
      */
+    @Override
     public void update()
     {
         double currentSpeed = speedometer.getSpeed();
-        double distance = (currentSpeed / 3600) / DashboardLoop.DELTA_TIME;
+        double distance = (currentSpeed / 3600) / DELTA_TIME;
         try
         {
             odometer.addDistance(distance);

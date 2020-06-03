@@ -1,11 +1,11 @@
 package pl.boleklolek.model.speedometer;
 
-import pl.boleklolek.loop.DashboardLoop;
+import pl.boleklolek.loop.Updateable;
 
 /**
  * Ta klasa opisuje prędkościomierz.
  */
-public class Speedometer
+public class Speedometer implements Updateable
 {
     /**
      * Prędkość maksymalna.
@@ -131,9 +131,10 @@ public class Speedometer
     /**
      * Aktualizuje prędkość względem przyspieszenia i tempomatu.
      */
+    @Override
     public void update()
     {
-        speed += acceleration / DashboardLoop.DELTA_TIME;
+        speed += acceleration / DELTA_TIME;
 
         if (speed < 0.0)
         {
